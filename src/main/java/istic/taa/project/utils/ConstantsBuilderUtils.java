@@ -21,10 +21,10 @@ public class ConstantsBuilderUtils {
 				this.props.load(is);
 			}
 		} catch (FileNotFoundException e) {
-			LOG.error((Object) "unable to find the properties file");
+			LOG.error("unable to find the properties file");
 			throw new TechnicalException("Fatal error => something went wrong", e);
 		} catch (IOException e) {
-			LOG.error((Object) "unable to load the properties file");
+			LOG.error("unable to load the properties file");
 			throw new TechnicalException("Fatal error => something went wrong", e);
 		}
 	}

@@ -24,7 +24,7 @@ public class EncodingUtils {
             }
         }
         catch (NoSuchAlgorithmException md) {
-            // empty catch block
+        	
         }
         return hashtext;
     }

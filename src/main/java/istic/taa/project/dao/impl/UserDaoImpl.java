@@ -16,7 +16,7 @@ public class UserDaoImpl extends GenericDaoImpl<User> implements IUserDao {
 	private static final String GET_USER_BY_MAIL_AND_USERNAME_QUERY = "FROM User user WHERE user.email = :e AND user.username = :u";
 	private static final String CHECK_EMAIL_EXISTS_QUERY = "FROM User user WHERE user.email = :e";
 	private static final String CHECK_USERNAME_EXISTS_QUERY = "FROM User user WHERE user.username = :u";
-
+	@Override
 	public User getUserByCredential(String username, String password) {
 		Query query = EntityManagerHelper.createHqlQuery(GET_USER_BY_CREDENTIALS_QUERY);
 		query.setParameter("u", username);

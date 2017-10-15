@@ -1,9 +1,13 @@
 package istic.taa.project.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import istic.taa.project.model.FavouriteActivity;
 import istic.taa.project.model.User;
 import istic.taa.project.services.IUserService;
 import istic.taa.project.wrappers.UserWrapper;
@@ -13,6 +17,11 @@ public class UserController {
 
 	@Autowired
 	private IUserService userService;
+	
+	@RequestMapping("/interface/v1/get-favourite-activities")
+	public List<FavouriteActivity> favouriteActivities(@RequestBody User user) {
+		return userService.getFavouriteActivities(user.getUsername(), user.getEmail());
+	}
 
 	@RequestMapping("/interface/v1/authenticate")
 	public UserWrapper authenticate(@RequestBody User u) {

@@ -1,9 +1,14 @@
 package istic.taa.project.services.impl;
 
+import istic.taa.project.dao.IActivityDao;
+import istic.taa.project.dao.IFavouriteActivityDao;
 import istic.taa.project.dao.IUserDao;
+import istic.taa.project.model.FavouriteActivity;
 import istic.taa.project.model.User;
 import istic.taa.project.services.IUserService;
 import istic.taa.project.wrappers.UserWrapper;
+
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -12,6 +17,13 @@ import org.springframework.stereotype.Component;
 public class UserServiceImpl implements IUserService {
 	@Autowired
 	private IUserDao userDao;
+	@Autowired
+	private IFavouriteActivityDao activityDao;
+	
+	public List<FavouriteActivity> getFavouriteActivities(String username, String email){
+		User user = userDao.getUserByMailAndUsername(username, email);
+		return activityDao.getFavouriteActivities(user.getIdentifier());
+	}
 
 	public UserWrapper authenticate(String username, String pwd) {
 		User u = this.userDao.getUserByCredential(username, pwd);

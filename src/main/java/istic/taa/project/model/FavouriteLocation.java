@@ -2,6 +2,9 @@ package istic.taa.project.model;
 
 import istic.taa.project.model.Location;
 import istic.taa.project.model.User;
+
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -11,8 +14,12 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="favourite_location")
-public class FavouriteLocation {
-    @Id
+public class FavouriteLocation implements Serializable {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6602895578631820886L;
+	@Id
     @GeneratedValue
     private long identifier;
     @OneToOne

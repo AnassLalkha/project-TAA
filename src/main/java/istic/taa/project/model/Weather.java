@@ -1,113 +1,95 @@
 package istic.taa.project.model;
 
-import javax.persistence.Column;
+import java.io.Serializable;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.print.attribute.standard.MediaSize.Other;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name = "weather")
-public class Weather {
+
+public class Weather implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -784080476239664777L;
+	@JsonIgnore
 	@Id
 	@GeneratedValue
-	private long identifier;
-	@Column
-	private String title;
-	@Column
-	private double minWindCondition;
-	@Column
-	private double minTemperature;
-	@Column
-	private double minPluviometry;
-	@Column
-	private double minSunshine;
-	@Column
-	private double maxWindCondition;
-	@Column
-	private double maxTemperature;
-	@Column
-	private double maxPluviometry;
-	@Column
-	private double maxSunshine;
+	private long id;
 
-	public long getIdentifier() {
-		return this.identifier;
+	@JsonProperty("location")
+	@JoinColumn(name = "location", referencedColumnName = "identifier")
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private Location location;
+	@ManyToOne(fetch = FetchType.LAZY, targetEntity = Current.class)
+	@JoinColumn(name = "current", referencedColumnName = "identifier")
+	@JsonProperty("current")
+	private Current current;
+
+	public Location getLocation() {
+		return location;
 	}
 
-	public void setIdentifier(long identifier) {
-		this.identifier = identifier;
+	public void setLocation(Location location) {
+		this.location = location;
 	}
 
-	public String getTitle() {
-		return this.title;
+	public Current getCurrent() {
+		return current;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
+	public void setCurrent(Current current) {
+		this.current = current;
 	}
 
-	public double getMinWindCondition() {
-		return this.minWindCondition;
+	public long getId() {
+		return id;
 	}
 
-	public void setMinWindCondition(double minWindCondition) {
-		this.minWindCondition = minWindCondition;
+	public void setId(long id) {
+		this.id = id;
 	}
 
-	public double getMinTemperature() {
-		return this.minTemperature;
+	@Override
+	public int hashCode() {
+		int result = 33;
+		int prime = 5;
+		result = result + prime * ((location == null) ? 0 : location.hashCode());
+		result = result + prime * ((current == null) ? 0 : current.hashCode());
+		return result;
 	}
-
-	public void setMinTemperature(double minTemperature) {
-		this.minTemperature = minTemperature;
-	}
-
-	public double getMinPluviometry() {
-		return this.minPluviometry;
-	}
-
-	public void setMinPluviometry(double minPluviometry) {
-		this.minPluviometry = minPluviometry;
-	}
-
-	public double getMinSunshine() {
-		return this.minSunshine;
-	}
-
-	public void setMinSunshine(double minSunshine) {
-		this.minSunshine = minSunshine;
-	}
-
-	public double getMaxWindCondition() {
-		return this.maxWindCondition;
-	}
-
-	public void setMaxWindCondition(double maxWindCondition) {
-		this.maxWindCondition = maxWindCondition;
-	}
-
-	public double getMaxTemperature() {
-		return this.maxTemperature;
-	}
-
-	public void setMaxTemperature(double maxTemperature) {
-		this.maxTemperature = maxTemperature;
-	}
-
-	public double getMaxPluviometry() {
-		return this.maxPluviometry;
-	}
-
-	public void setMaxPluviometry(double maxPluviometry) {
-		this.maxPluviometry = maxPluviometry;
-	}
-
-	public double getMaxSunshine() {
-		return this.maxSunshine;
-	}
-
-	public void setMaxSunshine(double maxSunshine) {
-		this.maxSunshine = maxSunshine;
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(obj == this)  {
+			return true;
+		}
+		if(obj == null) {
+			if(this != null) {
+				return false;
+			}
+		}
+		if(obj.getClass() != this.getClass()) {
+			return false;
+		}
+		Weather other = (Weather) obj;
+		if(!other.location.equals(this.location) 
+				|| !other.current.equals(this.current) 
+				|| other.id != this.id){
+			return false;
+		}
+		return true;
 	}
 }

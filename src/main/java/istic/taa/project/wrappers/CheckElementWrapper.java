@@ -1,10 +1,13 @@
 package istic.taa.project.wrappers;
 
-public class CheckElementWrapper {
+import istic.taa.project.constants.Operations;
+
+public class CheckElementWrapper extends GenericWrapper{
 	private boolean exist;
 	private String checkedElement;
 
-	public CheckElementWrapper(String element, boolean exist) {
+	public CheckElementWrapper(String element, boolean exist, String status, Operations o) {
+		super(o.toString(), status);
 		this.exist = exist;
 		this.checkedElement = element;
 	}

@@ -1,18 +1,14 @@
 package istic.taa.project.wrappers;
 
+import istic.taa.project.constants.Operations;
 import istic.taa.project.model.User;
 
-public class UserWrapper {
+public class UserWrapper extends GenericWrapper {
 	private User user;
-	private String status;
 
-	public UserWrapper(User u) {
+	public UserWrapper(User u, Operations operation, String status) {
+		super(operation.toString(), status);
 		this.user = u;
-		if (u == null) {
-			status = "ko";
-		} else {
-			status = "ok";
-		}
 	}
 
 	public User getUser() {
@@ -21,13 +17,5 @@ public class UserWrapper {
 
 	public void setUser(User user) {
 		this.user = user;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
 	}
 }

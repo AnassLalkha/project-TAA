@@ -22,6 +22,7 @@ public class Location implements Serializable {
 	/**
 	 * 
 	 */
+	private int result;
 	private static final long serialVersionUID = -1815064957611545771L;
 	@JsonIgnore
 	@Id
@@ -146,4 +147,41 @@ public class Location implements Serializable {
 		this.tzId = tzId;
 	}
 
+	@Override
+	public int hashCode() {
+		result = 54;
+		int prime = 1;
+		result = result + prime * ((name == null) ? 0 : name.hashCode());
+		result = result + prime * ((localtime == null) ? 0 : localtime.hashCode());
+		result = result + prime * ((country == null) ? 0 : country.hashCode());
+		result = result + prime * ((lattitude == null) ? 0 : lattitude.hashCode());
+		result = result + prime * ((longitude == null) ? 0 : longitude.hashCode());
+		result = result + prime * ((region == null) ? 0 : region.hashCode());
+		result = result + prime * ((weatherFk == null) ? 0 : weatherFk.hashCode());
+		availableActivities.stream().forEach(fa -> 
+			result = result + prime * ((fa == null) ? 0 : fa.hashCode())
+		);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == this) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (obj.getClass() != this.getClass()) {
+			return false;
+		}
+		Location other = (Location) obj;
+		if (!other.name.equals(this.name) || !other.localtime.equals(this.localtime)
+				|| !other.country.equals(this.country) || !other.lattitude.equals(this.lattitude)
+				|| !other.longitude.equals(this.longitude) || !other.region.equals(this.region)
+				|| !other.weatherFk.equals(this.weatherFk) || other.identifier != this.identifier) {
+			return false;
+		}
+		return (this.availableActivities.equals(other.availableActivities));
+	}
 }

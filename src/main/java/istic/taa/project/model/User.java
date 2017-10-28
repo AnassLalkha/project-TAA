@@ -110,7 +110,7 @@ public class User implements Serializable {
 	@Override
 	public int hashCode() {
 		result = 31;
-		int prime = 8;
+		int prime = 1;
 		result = result + prime * ((username == null) ? 0 : username.hashCode());
 		result = result + prime * ((password == null) ? 0 : password.hashCode());
 		result = result + prime * ((email == null) ? 0 : email.hashCode());

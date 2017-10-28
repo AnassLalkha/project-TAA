@@ -11,7 +11,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.print.attribute.standard.MediaSize.Other;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -65,29 +64,25 @@ public class Weather implements Serializable {
 	@Override
 	public int hashCode() {
 		int result = 33;
-		int prime = 5;
+		int prime = 1;
 		result = result + prime * ((location == null) ? 0 : location.hashCode());
 		result = result + prime * ((current == null) ? 0 : current.hashCode());
 		return result;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
-		if(obj == this)  {
+		if (obj == this) {
 			return true;
 		}
-		if(obj == null) {
-			if(this != null) {
-				return false;
-			}
+		if (obj == null) {
+			return false;
 		}
-		if(obj.getClass() != this.getClass()) {
+		if (obj.getClass() != this.getClass()) {
 			return false;
 		}
 		Weather other = (Weather) obj;
-		if(!other.location.equals(this.location) 
-				|| !other.current.equals(this.current) 
-				|| other.id != this.id){
+		if (!other.location.equals(this.location) || !other.current.equals(this.current) || other.id != this.id) {
 			return false;
 		}
 		return true;

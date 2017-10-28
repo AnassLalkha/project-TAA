@@ -89,8 +89,8 @@ public class Activity implements Serializable {
 		int result = 88;
 		int prime = 8;
 		result = result + prime * ((description == null) ? 0 : description.hashCode());
-		result = result + prime * ((image == null) ? 0 : description.hashCode());
-		result = result + prime * ((name == null) ? 0 : description.hashCode());
+		result = result + prime * ((image == null) ? 0 : image.hashCode());
+		result = result + prime * ((name == null) ? 0 : name.hashCode());
 
 		return result;
 	}

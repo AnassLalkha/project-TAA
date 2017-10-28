@@ -3,7 +3,9 @@ package istic.taa.project.utils;
 import java.util.Random;
 
 public class RandomUtils {
-	
+	private RandomUtils() {
+		
+	}
 	
 	public static String generateRandom() {
 		StringBuilder sb = new StringBuilder();

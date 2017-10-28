@@ -5,7 +5,10 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import org.apache.log4j.Logger;
+
 public class EncodingUtils {
+	private static final Logger LOG = Logger.getLogger(EncodingUtils.class);
     private EncodingUtils() {
     }
 
@@ -24,7 +27,7 @@ public class EncodingUtils {
             }
         }
         catch (NoSuchAlgorithmException md) {
-        	
+        	LOG.error("Unable to encode the password", md);
         }
         return hashtext;
     }

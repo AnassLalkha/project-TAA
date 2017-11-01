@@ -1,9 +1,8 @@
 package istic.taa.project.model;
 
-import istic.taa.project.model.FavouriteLocation;
-
 import java.io.Serializable;
 import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,9 +18,9 @@ public class User implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -8477468226392649425L;
-	//user to calculate the hash code
+	// user to calculate the hash code
 	private int result;
-	@Column(nullable = false, unique = true)
+	@Column(nullable = false, unique = true, length = 25)
 	private String username;
 	@Column(nullable = false)
 	private String password;
@@ -115,7 +114,7 @@ public class User implements Serializable {
 		result = result + prime * ((password == null) ? 0 : password.hashCode());
 		result = result + prime * ((email == null) ? 0 : email.hashCode());
 		result = result + prime * ((deletionCode == null) ? 0 : deletionCode.hashCode());
-		favouriteLocations.stream().forEach( fl -> {
+		favouriteLocations.stream().forEach(fl -> {
 			result = result + prime * ((fl == null) ? 0 : fl.hashCode());
 		});
 		return result;
@@ -138,7 +137,7 @@ public class User implements Serializable {
 				|| other.identifier != this.identifier || other.validatedMail != this.validatedMail) {
 			return false;
 		}
-		
+
 		return (this.favouriteLocations.equals(other.favouriteLocations));
 	}
 }

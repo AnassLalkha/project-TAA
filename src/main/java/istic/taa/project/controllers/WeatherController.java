@@ -18,11 +18,11 @@ public class WeatherController {
 	@Autowired
 	private IWeatherService weatherService;
 
-	@RequestMapping("/interface/v1/update-weather")
+	@RequestMapping("/interface/v1/perm/update-weather")
 	public void updateWeather(@RequestBody Weather weather) throws IOException {
 	}
-	
-	@RequestMapping("/interface/v1/request-current-weather")
+
+	@RequestMapping("/interface/v1/perm/request-current-weather")
 	public WeatherWrapper getCurrentWeather(@RequestParam String location) {
 		return weatherService.getCurrentWeatherByLocation(location);
 	}

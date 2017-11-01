@@ -12,13 +12,13 @@ import istic.taa.project.wrappers.CheckElementWrapper;
 public class ValidationController {
 	@Autowired
 	private IValidationService validationService;
-	
-	@RequestMapping("/interface/v1/check-email")
+
+	@RequestMapping("/interface/v1/perm/check-email")
 	public CheckElementWrapper checkEmail(@RequestParam("email") String mail) {
 		return validationService.checkEMail(mail);
 	}
-	
-	@RequestMapping("/interface/v1/check-username")
+
+	@RequestMapping("/interface/v1/perm/check-username")
 	public CheckElementWrapper checkUsername(@RequestParam("username") String username) {
 		return validationService.checkUsername(username);
 	}

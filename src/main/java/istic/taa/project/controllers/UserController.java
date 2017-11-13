@@ -67,4 +67,15 @@ public class UserController {
 	public GenericWrapper requestDeletion(@RequestBody User u) {
 		return userService.requestDeletion(u.getUsername(), u.getEmail());
 	}
+
+	@RequestMapping("/interface/v1/auth/generated-proposal")
+	public List<Activity> generatedRequest(@RequestParam String username) {
+		return userService.generateActivityByWeather(username);
+	}
+
+	@RequestMapping("/interface/v1/perm/validate-mail")
+	public GenericWrapper validateMail(@RequestParam String q) {
+		return userService.validateMail(q);
+	}
+
 }

@@ -15,6 +15,7 @@ import istic.taa.project.model.FavouriteLocation;
 import istic.taa.project.model.User;
 import istic.taa.project.security.UserAccount;
 import istic.taa.project.services.IUserService;
+import istic.taa.project.services.IWeatherService;
 import istic.taa.project.services.impl.TokenServiceImpl;
 import istic.taa.project.utils.UserFactory;
 import istic.taa.project.wrappers.GenericWrapper;
@@ -26,6 +27,8 @@ public class UserController {
 	TokenServiceImpl jwtUtil;
 	@Autowired
 	private IUserService userService;
+	@Autowired
+	private IWeatherService weatherService;
 
 	@RequestMapping("/interface/v1/auth/get-favourite-activities")
 	public List<FavouriteActivity> favouriteActivities(@RequestBody User user) {
@@ -77,4 +80,8 @@ public class UserController {
 		return userService.validateMail(q);
 	}
 
+	@RequestMapping("/interface/v1/auth/update-weather")
+	public void updateWeather() {
+		weatherService.updatewkndWeatherForAllLocation();
+	}
 }

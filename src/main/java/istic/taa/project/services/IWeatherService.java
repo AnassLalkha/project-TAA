@@ -7,9 +7,12 @@ import istic.taa.project.wrappers.GenericWrapper;
 import istic.taa.project.wrappers.WeatherWrapper;
 
 public interface IWeatherService {
-	public List<Weather> getForcastWeatherByLocation(String location,Integer days);
+	public List<Weather> getForcastWeatherByLocation(String location, Integer days);
+
 	public WeatherWrapper getCurrentWeatherByLocation(String location);
+
 	public GenericWrapper updateWeather(String location, Integer days);
-	
+
+	public void updatewkndWeatherForAllLocation();
 
 }

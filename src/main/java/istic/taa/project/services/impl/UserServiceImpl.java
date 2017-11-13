@@ -176,5 +176,4 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 		GenericWrapper w = new GenericWrapper(Operations.VALIDATE_MAIL.toString(), status);
 		return w;
 	}
-
 }

@@ -21,8 +21,10 @@ import istic.taa.project.model.AdequateActivitiesWeather;
 import istic.taa.project.model.FavouriteActivity;
 import istic.taa.project.model.FavouriteLocation;
 import istic.taa.project.model.InvalidTokens;
+import istic.taa.project.model.Message;
 import istic.taa.project.model.User;
 import istic.taa.project.model.Weather;
+import istic.taa.project.services.INotificationService;
 import istic.taa.project.services.ITokenService;
 import istic.taa.project.services.IUserService;
 import istic.taa.project.utils.UserFactory;
@@ -45,6 +47,8 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 	private IActivityDao activityDao;
 	@Autowired
 	private IWeatherDao weatherDao;
+	@Autowired
+	private INotificationService notificationService;
 
 	@Override
 	public List<FavouriteLocation> getFavouriteLocations(String username, String email) {
@@ -76,6 +80,8 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 		User u = new User(username, password, mail);
 		try {
 			userDao.create(u);
+			Message message = new Message(username, true, mail);
+			notificationService.sendMessage(message);
 		} catch (Exception e) {
 			u = null;
 		}
@@ -91,6 +97,8 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 			boolean result = userDao.updateDeletionCode(u);
 			if (result) {
 				status = "ok";
+				Message message = new Message(username, false, mail);
+				notificationService.sendMessage(message);
 			}
 		}
 		return new GenericWrapper(Operations.REQUEST_DELETION.toString(), status);

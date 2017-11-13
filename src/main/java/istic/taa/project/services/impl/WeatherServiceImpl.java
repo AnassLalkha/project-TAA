@@ -1,5 +1,6 @@
 package istic.taa.project.services.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,8 +58,13 @@ public class WeatherServiceImpl implements IWeatherService {
 
 	@Override
 	public void updatewkndWeatherForAllLocation() {
-		locationDao.findAll().stream().forEach(l -> {
-			List<Weather> list = getForcastWeatherByLocation(l.getName(), 5);
+		List<String> test = new ArrayList<String>();
+		test.add("rennes");
+		test.add("paris");
+		test.add("lille");
+		test.add("brest");
+		/* locationDao.findAll() */test.stream().forEach(l -> {
+			List<Weather> list = getForcastWeatherByLocation(l/* .getName() */, 5);
 			if (list.size() >= 4) {
 				weatherDao.create(list.get(4));
 			}

@@ -29,7 +29,6 @@ public class WeatherConsumerImpl implements IWeatherConsumer {
 		return weathers;
 	}
 
-
 	@Override
 	public void updateWeather(String location, String mode, Integer days) {
 
@@ -42,7 +41,7 @@ public class WeatherConsumerImpl implements IWeatherConsumer {
 			weathers = parserHelper.fromStrToObj(result, new TypeReference<List<Weather>>() {
 			});
 		}
-		saveWeather();
+		// saveWeather();
 	}
 
 	private String buildEndpoint(String location, String mode, Integer days) {
@@ -58,9 +57,9 @@ public class WeatherConsumerImpl implements IWeatherConsumer {
 	}
 
 	private void saveWeather() {
-			weathers.stream().forEach ( w -> {
-				weatherDao.create(w);
-			});
+		weathers.stream().forEach(w -> {
+			weatherDao.create(w);
+		});
 	}
 
 }

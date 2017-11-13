@@ -14,6 +14,7 @@ import istic.taa.project.dao.IActivityDao;
 import istic.taa.project.dao.IFavouriteActivityDao;
 import istic.taa.project.dao.IFavouriteLocationDao;
 import istic.taa.project.dao.IUserDao;
+import istic.taa.project.dao.IWeatherDao;
 import istic.taa.project.dao.impl.AdequateActivityWeatherDao;
 import istic.taa.project.model.Activity;
 import istic.taa.project.model.AdequateActivitiesWeather;
@@ -42,6 +43,8 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 	private AdequateActivityWeatherDao aaWeather;
 	@Autowired
 	private IActivityDao activityDao;
+	@Autowired
+	private IWeatherDao weatherDao;
 
 	@Override
 	public List<FavouriteLocation> getFavouriteLocations(String username, String email) {
@@ -118,8 +121,18 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 	@Override
 	public List<Activity> generateActivityByWeather(String username) {
 		// firstable get the user favourite activities
-
-		return null;
+		User u = this.findByUsername(username);
+		if (u != null) {
+			List<Activity> fullResult = new ArrayList<>();
+			// should determine the favourite location
+			List<FavouriteLocation> fl = u.getFavouriteLocations();
+			fl.stream().forEach(l -> {
+				Weather weather = weatherDao.findByLocation(l.getIdentifier());
+				fullResult.addAll(getActivityMatchingToWeather(getActivitieByWeather(weather)));
+			});
+			return fullResult;
+		}
+		return new ArrayList<>();
 	}
 
 	private List<Activity> getActivityMatchingToWeather(List<AdequateActivitiesWeather> aaw) {

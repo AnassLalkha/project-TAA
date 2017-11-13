@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import istic.taa.project.model.Activity;
 import istic.taa.project.model.FavouriteActivity;
 import istic.taa.project.model.FavouriteLocation;
 import istic.taa.project.model.User;
@@ -64,5 +65,10 @@ public class UserController {
 	@RequestMapping("/interface/v1/auth/request-deletion")
 	public GenericWrapper requestDeletion(@RequestBody User u) {
 		return userService.requestDeletion(u.getUsername(), u.getEmail());
+	}
+
+	@RequestMapping("/interface/v1/auth/generated-proposal")
+	public List<Activity> generatedRequest(@RequestParam String username) {
+		return userService.generateActivityByWeather(username);
 	}
 }

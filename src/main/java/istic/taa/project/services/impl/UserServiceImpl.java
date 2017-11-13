@@ -13,7 +13,7 @@ import istic.taa.project.constants.Operations;
 import istic.taa.project.dao.IFavouriteActivityDao;
 import istic.taa.project.dao.IFavouriteLocationDao;
 import istic.taa.project.dao.IUserDao;
-import istic.taa.project.model.FavouriteActivity;
+import istic.taa.project.model.Activity;
 import istic.taa.project.model.FavouriteLocation;
 import istic.taa.project.model.InvalidTokens;
 import istic.taa.project.model.User;
@@ -44,7 +44,7 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 	}
 
 	@Override
-	public List<FavouriteActivity> getFavouriteActivities(String username, String email) {
+	public List<Activity> getFavouriteActivities(String username, String email) {
 		User user = userDao.getUserByMailAndUsername(username, email);
 		if (user != null) {
 			return activityDao.getFavouriteActivities(user.getIdentifier());

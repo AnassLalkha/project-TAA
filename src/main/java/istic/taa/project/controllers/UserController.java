@@ -4,12 +4,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mobile.device.Device;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import istic.taa.project.model.FavouriteActivity;
+import istic.taa.project.model.Activity;
 import istic.taa.project.model.FavouriteLocation;
 import istic.taa.project.model.User;
 import istic.taa.project.security.UserAccount;
@@ -19,6 +20,7 @@ import istic.taa.project.utils.UserFactory;
 import istic.taa.project.wrappers.GenericWrapper;
 import istic.taa.project.wrappers.UserWrapper;
 
+@CrossOrigin("*")
 @RestController
 public class UserController {
 	@Autowired
@@ -27,11 +29,11 @@ public class UserController {
 	private IUserService userService;
 
 	@RequestMapping("/interface/v1/auth/get-favourite-activities")
-	public List<FavouriteActivity> favouriteActivities(@RequestBody User user) {
+	public List<Activity> favouriteActivities(@RequestBody User user) {
 		return userService.getFavouriteActivities(user.getUsername(), user.getEmail());
 	}
 
-	@RequestMapping("/interface/v1/perm/logout")
+	@RequestMapping("/interface/v1/auth/logout")
 	public GenericWrapper logout(@RequestParam String username) {
 		return userService.logout(username);
 	}

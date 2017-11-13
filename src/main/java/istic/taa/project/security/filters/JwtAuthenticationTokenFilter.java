@@ -45,6 +45,11 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
 		String username = null;
 		String authToken = null;
+		/*
+		 * CORS MANAGEMENT
+		 */
+		response.addHeader("Access-Control-Allow-Origin", "*");
+		response.addHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
 		if (requestHeader != null && requestHeader.startsWith(config.getPrefix())) {
 			// remove the bearer
 			authToken = requestHeader.replace(config.getPrefix(), "");

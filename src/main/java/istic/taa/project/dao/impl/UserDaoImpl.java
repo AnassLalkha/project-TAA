@@ -17,6 +17,7 @@ public class UserDaoImpl extends GenericDaoImpl<User> implements IUserDao {
 	private static final String CHECK_EMAIL_EXISTS_QUERY = "FROM User user WHERE user.email = :e";
 	private static final String GET_USER_BY_USERNAME = "FROM User user WHERE user.username = :u";
 	private static final String GET_USER_BY_VALIDATION_CODE = "FROM User user WHERE user.validationCode = :vc";
+	private boolean tryToSync = true;
 
 	@Override
 	public User getUserByCredential(String username, String password) {
@@ -82,6 +83,11 @@ public class UserDaoImpl extends GenericDaoImpl<User> implements IUserDao {
 		query.setParameter("u", username);
 		if (!query.getResultList().isEmpty()) {
 			return (User) query.getResultList().get(0);
+		} else if (tryToSync) {
+			// manage the synchronisation
+			EntityManagerHelper.close();
+			tryToSync = false;
+			findUserByUsername(username);
 		}
 		return null;
 

@@ -2,6 +2,7 @@ package istic.taa.project.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -37,7 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				// don't create session
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 
-				.authorizeRequests()
+				.authorizeRequests().antMatchers(HttpMethod.OPTIONS).permitAll()
 
 				// allow anonymous resource requests
 				.antMatchers("/interface/v1/perm/**").permitAll().antMatchers("/interface/v1/perm/auth/**").permitAll()

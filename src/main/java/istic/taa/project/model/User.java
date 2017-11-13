@@ -3,8 +3,10 @@ package istic.taa.project.model;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -38,7 +40,7 @@ public class User implements Serializable {
 	@GeneratedValue
 	@Column(nullable = false, unique = true)
 	private long identifier;
-	@ManyToOne(targetEntity = FavouriteLocation.class)
+	@ManyToOne(targetEntity = FavouriteLocation.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "favourite_location_fk", referencedColumnName = "identifier")
 	private List<FavouriteLocation> favouriteLocations;
 	@Column(name = "deletion_code", nullable = true, length = 21)

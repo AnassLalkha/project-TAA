@@ -3,6 +3,7 @@ package istic.taa.project.controllers;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -12,6 +13,7 @@ import istic.taa.project.model.Weather;
 import istic.taa.project.services.IWeatherService;
 import istic.taa.project.wrappers.WeatherWrapper;
 
+@CrossOrigin("*")
 @RestController
 public class WeatherController {
 

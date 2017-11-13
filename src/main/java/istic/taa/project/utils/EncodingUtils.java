@@ -40,10 +40,13 @@ public class EncodingUtils {
 	public static String encodeUsername(String username, String suffix, String staticSuffix) {
 		Date now = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		StringBuilder sb = new StringBuilder(username)
-				.append(suffix.replace(PATTERN_0, sdf.format(now)).replace(PATTERN_1, staticSuffix));
+		if (username != null) {
+			StringBuilder sb = new StringBuilder(username)
+					.append(suffix.replace(PATTERN_0, sdf.format(now)).replace(PATTERN_1, staticSuffix));
 
-		return sb.toString();
+			return sb.toString();
+		}
+		return null;
 	}
 
 	public static String decodeUsername(String encodedUsername) {

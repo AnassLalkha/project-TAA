@@ -3,7 +3,6 @@ package istic.taa.project.services;
 import java.util.List;
 
 import istic.taa.project.model.Activity;
-import istic.taa.project.model.FavouriteActivity;
 import istic.taa.project.model.FavouriteLocation;
 import istic.taa.project.model.User;
 import istic.taa.project.wrappers.GenericWrapper;
@@ -16,7 +15,7 @@ public interface IUserService {
 
 	public GenericWrapper requestDeletion(String username, String mail);
 
-	public List<FavouriteActivity> getFavouriteActivities(String username, String email);
+	public List<Activity> getFavouriteActivities(String username, String email);
 
 	public List<FavouriteLocation> getFavouriteLocations(String username, String email);
 

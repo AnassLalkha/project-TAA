@@ -25,4 +25,6 @@ public interface IUserService {
 	public User findByUsername(String username);
 
 	public List<Activity> generateActivityByWeather(String username);
+
+	public GenericWrapper validateMail(String param);
 }

@@ -14,6 +14,14 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "user")
 public class User implements Serializable {
+	public String getValidationCode() {
+		return validationCode;
+	}
+
+	public void setValidationCode(String validationCode) {
+		this.validationCode = validationCode;
+	}
+
 	/**
 	 * 
 	 */
@@ -33,8 +41,10 @@ public class User implements Serializable {
 	@ManyToOne(targetEntity = FavouriteLocation.class)
 	@JoinColumn(name = "favourite_location_fk", referencedColumnName = "identifier")
 	private List<FavouriteLocation> favouriteLocations;
-	@Column(name = "deletion_code", nullable = true)
+	@Column(name = "deletion_code", nullable = true, length = 21)
 	private String deletionCode;
+	@Column(name = "validation_code", nullable = true, length = 21)
+	private String validationCode;
 
 	public String getDeletionCode() {
 		return deletionCode;

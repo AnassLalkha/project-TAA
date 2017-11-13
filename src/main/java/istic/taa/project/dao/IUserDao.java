@@ -14,4 +14,6 @@ public interface IUserDao extends IGenericDao<User> {
 	public boolean checkUsernameExists(String username);
 
 	public User findUserByUsername(String username);
+
+	public User findUserByValidationCode(String validationCode);
 }

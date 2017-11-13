@@ -27,6 +27,7 @@ import istic.taa.project.model.Weather;
 import istic.taa.project.services.INotificationService;
 import istic.taa.project.services.ITokenService;
 import istic.taa.project.services.IUserService;
+import istic.taa.project.utils.RandomUtils;
 import istic.taa.project.utils.UserFactory;
 import istic.taa.project.wrappers.GenericWrapper;
 import istic.taa.project.wrappers.UserWrapper;
@@ -78,9 +79,10 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 	@Override
 	public UserWrapper create(String username, String password, String mail) {
 		User u = new User(username, password, mail);
+		u.setValidationCode(RandomUtils.generateRandom());
 		try {
 			userDao.create(u);
-			Message message = new Message(username, true, mail);
+			Message message = new Message(u, "c");
 			notificationService.sendMessage(message);
 		} catch (Exception e) {
 			u = null;
@@ -97,7 +99,7 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 			boolean result = userDao.updateDeletionCode(u);
 			if (result) {
 				status = "ok";
-				Message message = new Message(username, false, mail);
+				Message message = new Message(u, "d");
 				notificationService.sendMessage(message);
 			}
 		}
@@ -160,6 +162,19 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 		String title = weather.getCurrent().getCondition().getDesc();
 		return ((aaWeather.getByParameter(t, w, p, h, title) == null) ? new ArrayList<>()
 				: aaWeather.getByParameter(t, w, p, h, title));
+	}
+
+	@Override
+	public GenericWrapper validateMail(String param) {
+		User u = userDao.findUserByValidationCode(param);
+		String status = "Unable to validate your mail";
+		if (u != null) {
+			u.setValidatedMail(true);
+			userDao.update(u);
+			status = "Your mail have been validated";
+		}
+		GenericWrapper w = new GenericWrapper(Operations.VALIDATE_MAIL.toString(), status);
+		return w;
 	}
 
 }

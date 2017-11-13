@@ -16,6 +16,7 @@ public abstract class GenericDaoImpl<T> implements IGenericDao<T> {
 		EntityManagerHelper.beginTransaction();
 		try {
 			EntityManagerHelper.getEntityManager().persist(obj);
+			EntityManagerHelper.getEntityManager().flush();
 			EntityManagerHelper.commit();
 		} catch (Exception e) {
 			EntityManagerHelper.rollback();

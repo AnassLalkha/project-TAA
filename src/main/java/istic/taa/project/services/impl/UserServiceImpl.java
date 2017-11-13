@@ -16,6 +16,7 @@ import istic.taa.project.dao.IFavouriteLocationDao;
 import istic.taa.project.dao.IUserDao;
 import istic.taa.project.dao.IWeatherDao;
 import istic.taa.project.dao.impl.AdequateActivityWeatherDao;
+import istic.taa.project.exceptions.TechnicalException;
 import istic.taa.project.model.Activity;
 import istic.taa.project.model.AdequateActivitiesWeather;
 import istic.taa.project.model.FavouriteLocation;
@@ -82,9 +83,11 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 		try {
 			userDao.create(u);
 			Message message = new Message(u, "c");
+			String str = "ssdsss";
 			notificationService.sendMessage(message);
 		} catch (Exception e) {
 			u = null;
+			throw new TechnicalException("something went wrong", e);
 		}
 		String status = (u == null) ? "ko" : "ok";
 		return new UserWrapper(u, Operations.CREATE_USER, status);

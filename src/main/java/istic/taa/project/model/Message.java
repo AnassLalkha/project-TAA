@@ -22,6 +22,7 @@ public class Message {
 
 	public Message(User user, String type) {
 		this.user = user;
+		this.type = type;
 		if (type.equals("c")) {
 			this.subject = Constants.SUBJECT_CONFIRM_ACCOUNT;
 		} else if (type.equals("d")) {
@@ -31,10 +32,11 @@ public class Message {
 	}
 
 	public String getEmail() {
-		if (type.equals("c")) {
+		if (email == null) {
 			return this.user.getEmail();
+		} else {
+			return this.email;
 		}
-		return this.email;
 	}
 
 	public String getSubject() {
@@ -43,9 +45,9 @@ public class Message {
 
 	public String doTemplate() {
 		if (type.equals("c")) {
-			return CONFIRM_TEMPLATE.replace("$0", username).replaceAll("$1", buildLinkConfirmation());
+			return CONFIRM_TEMPLATE.replace("$0", getUsername()).replace("$1", buildLinkConfirmation());
 		} else if (type.equals("d")) {
-			return DELETE_TEMPLTE.replace("$0", username).replaceAll("$1", buildLinkDelete());
+			return DELETE_TEMPLTE.replace("$0", getUsername()).replace("$1", buildLinkDelete());
 		} else {
 			return "";
 		}
@@ -53,6 +55,13 @@ public class Message {
 
 	private String buildLinkDelete() {
 		return "";
+	}
+
+	public String getUsername() {
+		if (this.username == null) {
+			this.username = user.getUsername();
+		}
+		return username;
 	}
 
 	private String buildLinkConfirmation() {

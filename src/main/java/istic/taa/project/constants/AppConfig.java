@@ -28,7 +28,7 @@ public class AppConfig {
 	private String headerName;
 	@Value("${security.jwt.username.suffix}")
 	private String usernameSuffix;
-	@Value("${default.notification.username")
+	@Value("${default.notification.username}")
 	private String defaultNotificationUsername;
 
 	public String getDefaultNotificationUsername() {
@@ -39,7 +39,7 @@ public class AppConfig {
 		return defaultNotificationPwd;
 	}
 
-	@Value("${default.notification.password")
+	@Value("${default.notification.password}")
 	private String defaultNotificationPwd;
 
 	public String getUsernameSuffix() {

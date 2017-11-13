@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mobile.device.Device;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,12 +30,15 @@ public class UserController {
 	private IUserService userService;
 
 	@RequestMapping("/interface/v1/auth/get-favourite-activities")
-	public List<Activity> favouriteActivities(@RequestBody User user) {
+	public List<Activity> favouriteActivities(
+			@RequestHeader(name = "Authorization", required = true) @RequestBody User user) {
+
 		return userService.getFavouriteActivities(user.getUsername(), user.getEmail());
 	}
 
 	@RequestMapping("/interface/v1/auth/logout")
-	public GenericWrapper logout(@RequestParam String username) {
+	public GenericWrapper logout(
+			@RequestHeader(name = "Authorization", required = true) @RequestParam String username) {
 		return userService.logout(username);
 	}
 
@@ -64,7 +68,7 @@ public class UserController {
 	}
 
 	@RequestMapping("/interface/v1/auth/request-deletion")
-	public GenericWrapper requestDeletion(@RequestBody User u) {
+	public GenericWrapper requestDeletion(@RequestHeader(name = "Authorization", required = true) @RequestBody User u) {
 		return userService.requestDeletion(u.getUsername(), u.getEmail());
 	}
 

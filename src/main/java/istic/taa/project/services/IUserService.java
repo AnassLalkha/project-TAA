@@ -2,6 +2,7 @@ package istic.taa.project.services;
 
 import java.util.List;
 
+import istic.taa.project.model.Activity;
 import istic.taa.project.model.FavouriteActivity;
 import istic.taa.project.model.FavouriteLocation;
 import istic.taa.project.model.User;
@@ -22,4 +23,6 @@ public interface IUserService {
 	public GenericWrapper logout(String username);
 
 	public User findByUsername(String username);
+
+	public List<Activity> generateActivityByWeather(String username);
 }

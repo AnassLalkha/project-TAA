@@ -10,13 +10,18 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import istic.taa.project.constants.Operations;
+import istic.taa.project.dao.IActivityDao;
 import istic.taa.project.dao.IFavouriteActivityDao;
 import istic.taa.project.dao.IFavouriteLocationDao;
 import istic.taa.project.dao.IUserDao;
+import istic.taa.project.dao.impl.AdequateActivityWeatherDao;
+import istic.taa.project.model.Activity;
+import istic.taa.project.model.AdequateActivitiesWeather;
 import istic.taa.project.model.FavouriteActivity;
 import istic.taa.project.model.FavouriteLocation;
 import istic.taa.project.model.InvalidTokens;
 import istic.taa.project.model.User;
+import istic.taa.project.model.Weather;
 import istic.taa.project.services.ITokenService;
 import istic.taa.project.services.IUserService;
 import istic.taa.project.utils.UserFactory;
@@ -28,11 +33,15 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 	@Autowired
 	private IUserDao userDao;
 	@Autowired
-	private IFavouriteActivityDao activityDao;
+	private IFavouriteActivityDao favActivityDao;
 	@Autowired
 	private IFavouriteLocationDao locationDao;
 	@Autowired
 	private ITokenService tokenService;
+	@Autowired
+	private AdequateActivityWeatherDao aaWeather;
+	@Autowired
+	private IActivityDao activityDao;
 
 	@Override
 	public List<FavouriteLocation> getFavouriteLocations(String username, String email) {
@@ -47,7 +56,7 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 	public List<FavouriteActivity> getFavouriteActivities(String username, String email) {
 		User user = userDao.getUserByMailAndUsername(username, email);
 		if (user != null) {
-			return activityDao.getFavouriteActivities(user.getIdentifier());
+			return favActivityDao.getFavouriteActivities(user.getIdentifier());
 		}
 		return new ArrayList<>();
 	}
@@ -104,6 +113,32 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 	public User findByUsername(String username) {
 		return userDao.findUserByUsername(username);
 
+	}
+
+	@Override
+	public List<Activity> generateActivityByWeather(String username) {
+		// firstable get the user favourite activities
+
+		return null;
+	}
+
+	private List<Activity> getActivityMatchingToWeather(List<AdequateActivitiesWeather> aaw) {
+		List<Activity> result = new ArrayList<>();
+		aaw.stream().forEach(a -> {
+			result.addAll(this.activityDao.getActivitieByAdequateWeather(a.getIdentifier()));
+		});
+		return result;
+	}
+
+	private List<AdequateActivitiesWeather> getActivitieByWeather(Weather weather) {
+		// construct the props
+		double t = weather.getCurrent().getTemperature();
+		double w = weather.getCurrent().getWindSpeed();
+		double p = weather.getCurrent().getPrecipitation();
+		double h = weather.getCurrent().getHumidity();
+		String title = weather.getCurrent().getCondition().getDesc();
+		return ((aaWeather.getByParameter(t, w, p, h, title) == null) ? new ArrayList<>()
+				: aaWeather.getByParameter(t, w, p, h, title));
 	}
 
 }
